@@ -63,16 +63,16 @@
       <el-col :span="12">
         <div>
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="localhost://h"
             list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
+            :on-change="handleChange"
             :limit="1"
+            :auto-upload="false"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible" size="tiny">
-            <img width="100%" :src="dialogImageUrl" alt />
+          <el-dialog size="tiny">
+            <img width="100%" :src="dialogImageUrlmain" alt />
           </el-dialog>
         </div>
       </el-col>
@@ -84,15 +84,16 @@
       <el-col :span="12">
         <div>
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="localhost://h"
             list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
+            :on-change="handleChangeimage"
             :limit="10"
+            multiple
+            :auto-upload="false"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible" size="tiny">
+          <el-dialog size="tiny">
             <img width="100%" :src="dialogImageUrl" alt />
           </el-dialog>
         </div>
@@ -100,7 +101,7 @@
     </el-row>
     <el-row>
       <el-col :offset="8" :span="3">
-        <el-button type="primary">上传</el-button>
+        <el-button type="primary" @click="uploadimage">上传</el-button>
       </el-col>
     </el-row>
   </div>
@@ -114,11 +115,10 @@ export default {
       moduls: "",
       weixin: "",
       phone: "",
-      image: "",
-      imagedetails: "", //其他详情图片
+      imagedetails: [], //其他详情图片
       expain: "", //产品的说明
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogImageUrlmain: [] //主图图片
     };
   },
   methods: {
@@ -131,9 +131,87 @@ export default {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+    /*
+     **  @description 主图上传参数
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    handleChange(file) {
+      const isLt5M = file.raw.size / 1024 / 1024 < 5;
+      const isJPG =
+        file.raw.type === "image/jpeg" || file.raw.type === "image/png";
+      if (!isJPG) {
+        this.$message.error("上传图片格式错误");
+        return;
+      }
+      if (!isLt5M) {
+        this.$message.error("上传图片不能大于5M");
+        return;
+      }
+      let that = this;
+      var reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onload = function() {
+        this.result; //base64编码
+        that.dialogImageUrlmain[0] = this.result;
+      };
+    },
+    /*
+     **  @description 详情图上传
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    handleChangeimage(file) {
+      const isLt5M = file.raw.size / 1024 / 1024 < 5;
+      const isJPG =
+        file.raw.type === "image/jpeg" || file.raw.type === "image/png";
+      if (!isJPG) {
+        this.$message.error("上传图片格式错误");
+        return;
+      }
+      if (!isLt5M) {
+        this.$message.error("上传图片不能大于5M");
+        return;
+      }
+      let that = this;
+      var reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onload = function() {
+        this.result; //base64编码
+        that.dialogImageUrl = this.result;
+        that.imagedetails.push(that.dialogImageUrl);
+      };
+    },
+    /*
+     **  @description 上传图片
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    uploadimage() {
+      let params = {
+        mainimgurl: this.dialogImageUrlmain, //是数组
+        detailsurl: this.imagedetails, //是数组
+        name: this.name,
+        number: this.number,
+        moduls: this.moduls,
+        weixin: this.weixin,
+        phone: this.phone,
+        expain: this.expain
+      };
+
+      for (const item in params) {
+        console.log(params[item]=="");
+        if (params[item]=="") {
+          this.$message.error("请正确填写表单")
+          return
+        }else{
+          // 发送请求
+        }
+      }
+
     }
   }
 };

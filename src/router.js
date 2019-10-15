@@ -18,6 +18,7 @@ export default new Router({
     {
       path: '/menusnavigation',
       name: 'menusnavigation',
+      redirect: 'diapers',
       component: () => import('./views/Menusnavigation.vue'),
       children: [{
           path: '/diapers',
@@ -28,6 +29,11 @@ export default new Router({
           path: '/diapersquery',
           name: 'diapersquery',
           component: () => import('./components/productshow/diapersquery.vue')
+        },
+        {
+          path: '/diapersupload',
+          name: 'diapersupload',
+          component: () => import('./components/productupload/diapersupload.vue')
         }
       ]
     }

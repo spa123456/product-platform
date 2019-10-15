@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="bx">
+    <p class="title">尿不湿产品</p>
     <el-table :data="tableData" style="width: 100%" size="mini" border>
       <el-table-column prop="name" label="产品名称" align="center"></el-table-column>
       <el-table-column prop="number" label="产品数量" align="center"></el-table-column>
@@ -20,9 +21,25 @@ export default {
     return {
         tableData:[
             {
-                productsID:1,
+                productID:1,
                 name:"花王",
-                number:'1203',
+                number:'130',
+                models:"nb,s,m,l,xl,xxl",
+                weixin:'13698374541',
+                phone:'13698374541'
+            },
+            {
+                productID:2,
+                name:"宜婴",
+                number:'233',
+                models:"nb,s,m,l,xl,xxl",
+                weixin:'13698374541',
+                phone:'13698374541'
+            },
+            {
+                productID:3,
+                name:"大王",
+                number:'156',
                 models:"nb,s,m,l,xl,xxl",
                 weixin:'13698374541',
                 phone:'13698374541'
@@ -32,14 +49,22 @@ export default {
   },
   methods: {
       gotoquery(row){
-          let name = "diapersquery"
-          let parmars = {
-              productsID:row.productsID
+          let url = "diapersquery"
+          let params = {
+            productID:row.productID
           }
-          this.$router.push({name:name,parmars:parmars})
+          this.$router.push({path:url,query:params})
       }
   }
 };
 </script>
 <style lang='less' scoped>
+.bx{
+  .title{
+    color: rgb(180, 32, 32);
+    font-weight: 700;
+    letter-spacing: 10px;
+    font-size: 20px;
+  }
+}
 </style>

@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="231px">
       <el-menu
-        default-active="1"
+        default-active="diapers"
         class="el-menu-vertical-demo"
         background-color="#545c64"
         text-color="#fff"
@@ -23,7 +23,7 @@
             <i class="el-icon-location"></i>
             <span>上传产品</span>
           </template>
-          <el-menu-item index="2-1">尿不湿</el-menu-item>
+          <el-menu-item index="diapersupload">尿不湿</el-menu-item>
           <el-menu-item index="2-2">衣服</el-menu-item>
         </el-submenu>
       </el-menu>

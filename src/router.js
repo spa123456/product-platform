@@ -5,16 +5,31 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'home',
-      redirect:'login'
+      redirect: 'login'
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import( './views/Login.vue')
+      component: () => import('./views/Login.vue')
+    },
+    {
+      path: '/menusnavigation',
+      name: 'menusnavigation',
+      component: () => import('./views/Menusnavigation.vue'),
+      children: [{
+          path: '/diapers',
+          name: 'diapers',
+          component: () => import('./components/productshow/diapers.vue')
+        },
+        {
+          path: '/diapersquery',
+          name: 'diapersquery',
+          component: () => import('./components/productshow/diapersquery.vue')
+        }
+      ]
     }
   ]
 })

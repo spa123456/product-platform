@@ -94,7 +94,7 @@
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog size="tiny">
-            <img width="100%" :src="dialogImageUrl" alt />
+            <!-- <img width="100%" :src="dialogImageUrl" alt /> -->
           </el-dialog>
         </div>
       </el-col>
@@ -107,6 +107,7 @@
   </div>
 </template>
 <script>
+import { log } from "util";
 export default {
   data() {
     return {
@@ -117,7 +118,7 @@ export default {
       phone: "",
       imagedetails: [], //其他详情图片
       expain: "", //产品的说明
-      dialogImageUrl: "",
+      // dialogImageUrl: "",
       dialogImageUrlmain: [] //主图图片
     };
   },
@@ -193,7 +194,7 @@ export default {
     uploadimage() {
       let params = {
         mainimgurl: this.dialogImageUrlmain, //是数组
-        detailsurl: this.imagedetails, //是数组
+        // detailsurl: this.imagedetails, //是数组
         name: this.name,
         number: this.number,
         moduls: this.moduls,
@@ -202,16 +203,21 @@ export default {
         expain: this.expain
       };
 
+      let num = 0;
       for (const item in params) {
-        console.log(params[item]=="");
-        if (params[item]=="") {
-          this.$message.error("请正确填写表单")
-          return
-        }else{
-          // 发送请求
+        if (params[item] == "") {
+          this.$message.error("请正确填写表单");
+          return;
+        } else {
+          num++;
         }
       }
-
+      if ((num = 7)) {
+        let url = "http://localhost:3000/adddiaperproduct";
+        this.$axios.post(url, params).then(res => {
+          console.log(params);
+        });
+      }
     }
   }
 };

@@ -10,7 +10,7 @@
       <el-table-column label="操作" align="center">
           <template slot-scope="scope">
               <el-button @click="gotoquery(scope.row)" size="mini" type="primary">查看详情</el-button>
-              <el-button @click="gotoquery(scope.row)" size="mini" type="danger">删除</el-button>
+              <el-button @click="removequery(scope.row)" size="mini" type="danger">删除</el-button>
           </template>
       </el-table-column>
     </el-table>
@@ -27,18 +27,50 @@ export default {
     this.getdiaperdetali()
   },
   methods: {
+    /*
+    **  @description 跳转到详情页面
+    **  @param {} 
+    **  @return 
+    **  @author shipingan
+    */
       gotoquery(row){
           let url = "diapersquery"
           let params = {
-            productID:row.productID
-          }
+            productID:row.id
+          }          
           this.$router.push({path:url,query:params})
       },
+      /*
+      **  @description 删除数据
+      **  @param {} 
+      **  @return 
+      **  @author shipingan
+      */
+      removequery(row){
+        
+        let url = 'http://localhost:3000/removediaperFile'
+        let params = {
+          id:row.id,
+          path:row.address 
+        }
+
+        this.$axios.post(url,params).then(res=>{
+          if (res.data) {
+            this.$message.success("删除成功")
+          }
+          this.getdiaperdetali()
+        })
+      },
+      /*
+      **  @description 获取diaper详情all
+      **  @param {} 
+      **  @return 
+      **  @author shipingan
+      */
       getdiaperdetali(){
         let url = 'http://localhost:3000/getdiaperdetalis'
         let params = {}
         this.$axios.post(url,params).then(res=>{
-          console.log(res);
           this.tableData = res.data
         })
       }

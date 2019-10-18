@@ -20,7 +20,7 @@
     <el-row>
       <el-col :span="12">
         <p>产品主图</p>
-        <img src="" alt="" width="300" height="300">
+        <img src alt width="300" height="300" />
       </el-col>
       <el-col :span="6">
         <p>产品描述</p>
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       productdetails: {},
-      productID:'',
+      productID: ""
     };
   },
   created() {
@@ -42,20 +42,27 @@ export default {
   },
   methods: {
     /*
-    **  @description 获取到路又传来的ID，通过产品ID查询数据
-    **  @param {} 
-    **  @return 
-    **  @author shipingan
-    */
+     **  @description 获取到路又传来的ID，通过产品ID查询数据
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
     queryproductID() {
-      this.productID = this.$route.query.productID
+      this.productID = this.$route.query.productID;
+      let url = "http://localhost:3000/getdiaperdetalis";
+      this.$axios.post(url,{id:this.productID}).then(res=>{
+        console.log(res.data.imagedetalis);
+        
+        //console.log(res.data.imagedetalis);//image
+        console.log(res.data.data[0]);//数据
+      })
     }
   }
 };
 </script>
 <style lang='less' scoped>
-.bx{
-  .first-row{
+.bx {
+  .first-row {
     margin-bottom: 30px;
   }
 }

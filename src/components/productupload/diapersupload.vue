@@ -122,15 +122,7 @@ export default {
     };
   },
   methods: {
-    /*
-     **  @description 图片上传函数
-     **  @param {}
-     **  @return
-     **  @author shipingan
-     */
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
+ 
     /*
      **  @description 主图上传参数
      **  @param {}
@@ -216,6 +208,7 @@ export default {
         this.$axios.post(url, params).then(res => {
           if (res.data.status =="OK") {
             this.$message.success("OK")
+            this.$router.push('diapers')
           }
         });
       }

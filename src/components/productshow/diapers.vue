@@ -68,7 +68,7 @@ export default {
       **  @author shipingan
       */
       getdiaperdetali(){
-        let url = 'http://localhost:3000/getdiaperdetalis'
+        let url = 'http://localhost:3000/getdiaperlistdetalis'
         let params = {}
         this.$axios.post(url,params).then(res=>{
           this.tableData = res.data

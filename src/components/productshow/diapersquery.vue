@@ -20,12 +20,20 @@
     <el-row>
       <el-col :span="12">
         <p>产品主图</p>
-        <img src alt width="300" height="300" />
+        <img :src="mainimageurl" alt width="300" height="300" />
       </el-col>
       <el-col :span="6">
         <p>产品描述</p>
         <p>产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述</p>
       </el-col>
+    </el-row>
+    <p style="color:red">产品详情图</p>
+    <el-row>
+      <template v-for="(itme,index) in detailsurl">
+        <el-col :span="4" :offset="2">
+          <img :src="itme" alt width="300" height="300" />
+        </el-col>
+      </template>
     </el-row>
   </div>
 </template>
@@ -34,7 +42,9 @@ export default {
   data() {
     return {
       productdetails: {},
-      productID: ""
+      productID: "",
+      mainimageurl: "",
+      detailsurl: []
     };
   },
   created() {
@@ -50,12 +60,13 @@ export default {
     queryproductID() {
       this.productID = this.$route.query.productID;
       let url = "http://localhost:3000/getdiaperdetalis";
-      this.$axios.post(url,{id:this.productID}).then(res=>{
-        console.log(res.data.imagedetalis);
-        
-        //console.log(res.data.imagedetalis);//image
-        console.log(res.data.data[0]);//数据
-      })
+      this.$axios.post(url, { id: this.productID }).then(res => {
+        let img = JSON.parse(res.data.imagedetalis);
+        console.log(img);
+        this.mainimageurl = img.mainimageurl[0];
+        this.detailsurl = img.detailsurl;
+        console.log(res.data.data[0]); //数据
+      });
     }
   }
 };

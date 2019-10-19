@@ -59,10 +59,11 @@ export default {
      */
     queryproductID() {
       this.productID = this.$route.query.productID;
+      console.log(this.productID);
+      
       let url = "http://localhost:3000/getdiaperdetalis";
       this.$axios.post(url, { id: this.productID }).then(res => {
         let img = JSON.parse(res.data.imagedetalis);
-        console.log(img);
         this.mainimageurl = img.mainimageurl[0];
         this.detailsurl = img.detailsurl;
         console.log(res.data.data[0]); //数据

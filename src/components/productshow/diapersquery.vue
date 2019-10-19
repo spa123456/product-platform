@@ -59,10 +59,12 @@ export default {
      */
     queryproductID() {
       this.productID = this.$route.query.productID;
-      console.log(this.productID);
-      
+      let params = {
+        id:this.productID,
+        filename:'diaper'
+      }
       let url = "http://localhost:3000/getdiaperdetalis";
-      this.$axios.post(url, { id: this.productID }).then(res => {
+      this.$axios.post(url, params).then(res => {
         let img = JSON.parse(res.data.imagedetalis);
         this.mainimageurl = img.mainimageurl[0];
         this.detailsurl = img.detailsurl;

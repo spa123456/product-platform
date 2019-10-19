@@ -51,9 +51,11 @@ export default {
         let url = 'http://localhost:3000/removediaperFile'
         let params = {
           id:row.id,
-          path:row.address 
+          path:row.address,
+          filename:'diaper'
         }
-
+        console.log(params);
+        
         this.$axios.post(url,params).then(res=>{
           if (res.data) {
             this.$message.success("删除成功")
@@ -69,7 +71,9 @@ export default {
       */
       getdiaperdetali(){
         let url = 'http://localhost:3000/getdiaperlistdetalis'
-        let params = {}
+        let params = {
+          filename:'diaper'
+        }
         this.$axios.post(url,params).then(res=>{
           this.tableData = res.data
         })

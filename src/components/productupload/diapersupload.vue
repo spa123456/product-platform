@@ -184,6 +184,7 @@ export default {
      */
     uploadimage() {
       let params = {
+        filename:'diaper',
         mainimgurl: this.dialogImageUrlmain, //是数组
         detailsurl: this.imagedetails, //是数组
         name: this.name,
@@ -203,7 +204,7 @@ export default {
           num++;
         }
       }
-      if ((num == 8)) {
+      if ((num == 9)) {
         let url = "http://localhost:3000/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status =="OK") {

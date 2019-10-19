@@ -188,13 +188,15 @@ export default {
         mainimgurl: this.dialogImageUrlmain, //是数组
         detailsurl: this.imagedetails, //是数组
         name: this.name,
+        timeDate: Date.now() + "",
         number: this.number,
         moduls: this.moduls,
         weixin: this.weixin,
         phone: this.phone,
         expain: this.expain
       };
-
+      console.log(params);
+      
       let num = 0;
       for (const item in params) {
         if (params[item] == "") {
@@ -204,7 +206,7 @@ export default {
           num++;
         }
       }
-      if ((num == 9)) {
+      if ((num == 10)) {
         let url = "http://localhost:3000/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status =="OK") {

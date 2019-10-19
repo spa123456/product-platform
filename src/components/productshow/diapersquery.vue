@@ -5,7 +5,7 @@
         <el-tag type="success">名称：{{productdetails.name}}</el-tag>
       </el-col>
       <el-col :span="4">
-        <el-tag type="info">规格：{{productdetails.models}}</el-tag>
+        <el-tag type="info">规格：{{productdetails.moduls}}</el-tag>
       </el-col>
       <el-col :span="4">
         <el-tag type="warning">数量：{{productdetails.number}}</el-tag>
@@ -17,21 +17,21 @@
         <el-tag type="primary">电话：{{productdetails.phone}}</el-tag>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row class="main-image-col">
       <el-col :span="12">
-        <p>产品主图</p>
-        <img :src="mainimageurl" alt width="300" height="300" />
+        <p style="color:#FFF;font-size:30px">产品主图</p>
+        <img :src="mainimageurl" alt width="800" />
       </el-col>
       <el-col :span="6">
-        <p>产品描述</p>
-        <p>产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述产品描述</p>
+        <p style="color:#FFF;font-size:30px">产品描述</p>
+        <p style="color:#FFF;font-size:20px">{{productdetails.expain}}</p>
       </el-col>
     </el-row>
-    <p style="color:red">产品详情图</p>
     <el-row>
+      <p style="color:#AAA;font-size:30px">产品详情图</p>
       <template v-for="(itme,index) in detailsurl">
-        <el-col :span="4" :offset="2">
-          <img :src="itme" alt width="300" height="300" />
+        <el-col :span="24" class="image-col">
+          <img :src="itme" alt width="1000" />
         </el-col>
       </template>
     </el-row>
@@ -60,15 +60,16 @@ export default {
     queryproductID() {
       this.productID = this.$route.query.productID;
       let params = {
-        id:this.productID,
-        filename:'diaper'
-      }
+        id: this.productID,
+        filename: "diaper"
+      };
       let url = "http://localhost:3000/getdiaperdetalis";
       this.$axios.post(url, params).then(res => {
         let img = JSON.parse(res.data.imagedetalis);
         this.mainimageurl = img.mainimageurl[0];
         this.detailsurl = img.detailsurl;
-        console.log(res.data.data[0]); //数据
+        this.productdetails = res.data.data[0];
+        console.log(this.productdetails); //数据
       });
     }
   }
@@ -78,6 +79,13 @@ export default {
 .bx {
   .first-row {
     margin-bottom: 30px;
+  }
+  .image-col {
+    margin-top: 40px;
+    background-color: rgb(150, 84, 84);
+  }
+  .main-image-col {
+    background-color: rgb(113, 113, 116);
   }
 }
 </style>

@@ -54,9 +54,10 @@ export default {
           path:row.address,
           filename:'diaper'
         }
-        console.log(params);
         
+          console.log(params);
         this.$axios.post(url,params).then(res=>{
+          
           if (res.data) {
             this.$message.success("删除成功")
           }

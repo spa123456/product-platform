@@ -215,7 +215,6 @@ export default {
         money:this.money,
         discount:this.discount
       };
-      console.log(params);
       
       let num = 0;
       for (const item in params) {

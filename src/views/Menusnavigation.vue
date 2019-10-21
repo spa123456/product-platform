@@ -7,7 +7,7 @@
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
-        :default-openeds="defaultopeneds"
+        :default-active="NavActive"
         router
       >
         <el-submenu index="1">
@@ -29,15 +29,15 @@
       </el-menu>
     </el-aside>
     <el-main class="father-main">
-        <el-container>
-            <el-header height="40px" class="nav-header">
-                <i>登陆账号：</i>
-                <i>时平安</i>
-            </el-header>
-            <el-main class="nav-main">
-                <router-view/>
-            </el-main>
-        </el-container>
+      <el-container>
+        <el-header height="40px" class="nav-header">
+          <i>登陆账号：</i>
+          <i>时平安</i>
+        </el-header>
+        <el-main class="nav-main">
+          <router-view />
+        </el-main>
+      </el-container>
     </el-main>
   </el-container>
 </template>
@@ -45,10 +45,29 @@
 export default {
   data() {
     return {
-      defaultopeneds: ["1"]
+        NavActive:'diapers'
     };
   },
-  methods: {}
+  beforeMount() {
+    this.getActiveNav();
+  },
+  methods: {
+    handleSelect(index) {
+      this.NavActive = index;
+    },
+    getActiveNav: function() {
+      let currentUrl = window.location.href;
+      this.NavActive = currentUrl.split("/")[3];
+    }
+  },
+  watch: {
+    //监听路由变化
+
+    $route(index) {
+      let path = index.path.substr(1);
+      this.handleSelect(path);
+    }
+  }
 };
 </script>
 <style lang='less' scoped>
@@ -62,15 +81,15 @@ export default {
       text-align: left;
     }
   }
-  .father-main{
-      padding: 0;
-      .nav-header{
-          border-bottom: 1px solid #ccc;
-          line-height: 40px;
-      }
-      .nav-main{
-          padding: 10px;
-      }
+  .father-main {
+    padding: 0;
+    .nav-header {
+      border-bottom: 1px solid #ccc;
+      line-height: 40px;
+    }
+    .nav-main {
+      padding: 10px;
+    }
   }
 }
 </style>

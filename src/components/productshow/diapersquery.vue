@@ -35,7 +35,7 @@
     </el-row>
     <el-row>
       <p style="color:#AAA;font-size:30px">产品详情图</p>
-      <template v-for="(itme,index) in detailsurl">
+      <template v-for="(itme) in detailsurl" >
         <el-col :span="24" class="image-col">
           <img :src="itme" alt width="1000" />
         </el-col>
@@ -75,7 +75,6 @@ export default {
         this.mainimageurl = img.mainimageurl[0];
         this.detailsurl = img.detailsurl;
         this.productdetails = res.data.data[0];
-        console.log(this.productdetails); //数据
       });
     }
   }

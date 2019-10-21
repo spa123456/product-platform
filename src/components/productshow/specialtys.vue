@@ -54,8 +54,6 @@ export default {
           path:row.address,
           filename:'specialty'
         }
-        
-          console.log(params);
         this.$axios.post(url,params).then(res=>{
           
           if (res.data) {

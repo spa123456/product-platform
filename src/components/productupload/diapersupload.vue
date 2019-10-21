@@ -44,6 +44,22 @@
     </el-row>
     <el-row>
       <el-col :span="2" :offset="5">
+        <p>产品售价：</p>
+      </el-col>
+      <el-col :span="12">
+        <el-input placeholder="请输入商家电话" v-model="money"></el-input>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="2" :offset="5">
+        <p>产品折扣：</p>
+      </el-col>
+      <el-col :span="12">
+        <el-input placeholder="请输入商家电话" v-model="discount"></el-input>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="2" :offset="5">
         <p>产品说明：</p>
       </el-col>
       <el-col :span="12">
@@ -118,7 +134,9 @@ export default {
       imagedetails: [], //其他详情图片
       expain: "", //产品的说明
       dialogImageUrl: "",
-      dialogImageUrlmain: [] //主图图片
+      dialogImageUrlmain: [], //主图图片
+      money:'',
+      discount:''
     };
   },
   methods: {
@@ -193,7 +211,9 @@ export default {
         moduls: this.moduls,
         weixin: this.weixin,
         phone: this.phone,
-        expain: this.expain
+        expain: this.expain,
+        money:this.money,
+        discount:this.discount
       };
       console.log(params);
       
@@ -206,7 +226,7 @@ export default {
           num++;
         }
       }
-      if ((num == 10)) {
+      if ((num == 12)) {
         let url = "http://localhost:3000/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status =="OK") {

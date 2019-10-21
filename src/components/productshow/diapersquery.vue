@@ -1,20 +1,26 @@
 <template>
   <div class="bx">
     <el-row class="first-row">
-      <el-col :span="4">
+      <el-col :span="5">
         <el-tag type="success">名称：{{productdetails.name}}</el-tag>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <el-tag type="info">规格：{{productdetails.moduls}}</el-tag>
       </el-col>
       <el-col :span="4">
         <el-tag type="warning">数量：{{productdetails.number}}</el-tag>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <el-tag type="danger">微信：{{productdetails.weixin}}</el-tag>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <el-tag type="primary">电话：{{productdetails.phone}}</el-tag>
+      </el-col>
+      <el-col :span="5">
+        <el-tag type="success">价格：{{productdetails.money}}</el-tag>
+      </el-col>
+      <el-col :span="5">
+        <el-tag type="info">折扣：{{productdetails.discount}}</el-tag>
       </el-col>
     </el-row>
     <el-row class="main-image-col">
@@ -79,6 +85,12 @@ export default {
 .bx {
   .first-row {
     margin-bottom: 30px;
+    .el-col{
+      padding: 20px;
+      .el-tag{
+        font-size: 20px;
+      }
+    }
   }
   .image-col {
     margin-top: 40px;

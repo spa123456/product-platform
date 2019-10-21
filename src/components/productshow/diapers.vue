@@ -7,7 +7,7 @@
       <el-table-column prop="moduls" label="产品规格" align="center"></el-table-column>
       <el-table-column prop="weixin" label="商家微信" align="center"></el-table-column>
       <el-table-column prop="phone" label="商家电话" align="center"></el-table-column>
-      <el-table-column label="操作" align="center">
+      <el-table-column label="操作" align="center" width="300">
         <template slot-scope="scope">
           <el-button @click="gotoquery(scope.row)" size="mini" type="primary">查看详情</el-button>
           <el-button @click="updatequery(scope.row)" size="mini" type="warning">修改</el-button>

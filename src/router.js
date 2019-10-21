@@ -34,6 +34,16 @@ export default new Router({
           path: '/diapersupload',
           name: 'diapersupload',
           component: () => import('./components/productupload/diapersupload.vue')
+        },
+        {
+          path: '/specialtysuploade',
+          name: 'specialtysuploade',
+          component: () => import('./components/productupload/specialtysuploade.vue')
+        },
+        {
+          path: '/specialtys',
+          name: 'specialtys',
+          component: () => import('./components/productshow/specialtys.vue')
         }
       ]
     }

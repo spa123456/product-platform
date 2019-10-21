@@ -16,7 +16,7 @@
             <span>产品</span>
           </template>
           <el-menu-item index="diapers">尿不湿</el-menu-item>
-          <el-menu-item index="1-2">衣服</el-menu-item>
+          <el-menu-item index="specialtys">特产</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
@@ -24,7 +24,7 @@
             <span>上传产品</span>
           </template>
           <el-menu-item index="diapersupload">尿不湿</el-menu-item>
-          <el-menu-item index="2-2">衣服</el-menu-item>
+          <el-menu-item index="specialtysuploade">特产</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>

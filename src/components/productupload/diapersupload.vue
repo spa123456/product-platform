@@ -133,14 +133,16 @@ export default {
       moduls: "",
       weixin: "",
       phone: "",
-      imagedetails: [], //其他详情图片
+      address: "",
+      // imagedetails: [], //其他详情图片
       expain: "", //产品的说明
-      dialogImageUrl: "",
-      dialogImageUrlmain: [], //主图图片
+      // dialogImageUrl: "",
+      // dialogImageUrlmain: [], //主图图片
       money: "",
       discount: "",
       filelistmain: [], //主图绑定的已上传的文件列表
-      filelistdetail:[], 
+      filelistdetail: [],
+      id: "" //产品ID
     };
   },
   mounted() {
@@ -164,22 +166,28 @@ export default {
         this.$axios.post(url, query).then(res => {
           let data = res.data.data[0];
           let img = JSON.parse(res.data.imagedetalis);
-          console.log(img.detailsurl);
+          console.log(res);
           let imagemain = {
             name: "",
             url: img.mainimageurl[0]
           };
+          this.filelistmain.push(imagemain);
+
           img.detailsurl.map(item => {
             let imagedetalis = {
               name: "",
               url: item
             };
-            this.filelistdetail.push(imagedetalis)
+            this.filelistdetail.push(imagedetalis);
           });
 
-          this.filelistmain.push(imagemain);
 
-          // this.imagedetails, //是数组
+
+          // this.dialogImageUrlmain = this.filelistmain;
+          // this.imagedetails = this.filelistdetail; //是数组
+
+
+
           this.name = data.name;
           this.number = data.number;
           this.moduls = data.moduls;
@@ -188,6 +196,8 @@ export default {
           this.expain = data.expain;
           this.money = data.money;
           this.discount = data.discount;
+          this.address = data.address;
+          this.id = data.id;
         });
       }
     },
@@ -214,7 +224,7 @@ export default {
       reader.readAsDataURL(file.raw);
       reader.onload = function() {
         this.result; //base64编码
-        that.dialogImageUrlmain[0] = this.result;
+        that.filelistmain[0] = this.result;
       };
     },
     /*
@@ -241,7 +251,7 @@ export default {
       reader.onload = function() {
         this.result; //base64编码
         that.dialogImageUrl = this.result;
-        that.imagedetails.push(that.dialogImageUrl);
+        that.filelistdetail.push(that.dialogImageUrl);
       };
     },
     /*
@@ -253,8 +263,10 @@ export default {
     uploadimage() {
       let params = {
         filename: "diaper",
-        mainimgurl: this.dialogImageUrlmain, //是数组
-        detailsurl: this.imagedetails, //是数组
+        // mainimgurl: this.dialogImageUrlmain, //是数组
+        mainimgurl: this.filelistmain, //是数组
+        // detailsurl: this.imagedetails, //是数组
+        detailsurl: this.filelistdetail, //是数组
         name: this.name,
         timeDate: Date.now() + "",
         number: this.number,
@@ -263,19 +275,23 @@ export default {
         phone: this.phone,
         expain: this.expain,
         money: this.money,
-        discount: this.discount
+        discount: this.discount,
+        address: this.address,
+        id: this.id
       };
+      console.log(params);
 
       let num = 0;
       for (const item in params) {
-        if (params[item] == "") {
+        if (params[item] != "" || params.id == "") {
+          num++;
+        } else {
           this.$message.error("请正确填写表单");
           return;
-        } else {
-          num++;
         }
       }
-      if (num == 12) {
+
+      if (num == 14) {
         let url = "http://localhost:3000/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status == "OK") {

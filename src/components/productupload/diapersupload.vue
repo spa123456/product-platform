@@ -84,7 +84,7 @@
             :on-change="handleChange"
             :limit="1"
             :auto-upload="false"
-            show-file-list
+            :file-list="filelistmain"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -107,6 +107,7 @@
             :limit="10"
             multiple
             :auto-upload="false"
+            :file-list="filelistdetail"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -124,7 +125,6 @@
   </div>
 </template>
 <script>
-import { log } from 'util';
 export default {
   data() {
     return {
@@ -138,7 +138,9 @@ export default {
       dialogImageUrl: "",
       dialogImageUrlmain: [], //主图图片
       money: "",
-      discount: ""
+      discount: "",
+      filelistmain: [], //主图绑定的已上传的文件列表
+      filelistdetail:[], 
     };
   },
   mounted() {
@@ -154,27 +156,38 @@ export default {
     updatequery() {
       let productID = this.$route.query.productID;
       if (productID != undefined) {
-        console.log("查询数据");
         let url = "http://localhost:3000/getdiaperdetalis";
         let query = {
           id: productID,
           filename: "diaper"
         };
         this.$axios.post(url, query).then(res => {
-          let data = res.data.data[0]
-          let img = JSON.parse(res.data.imagedetalis)    
-          console.log(img.mainimageurl);
-                
-          // this.dialogImageUrlmain=img.mainimageurl //是数组
+          let data = res.data.data[0];
+          let img = JSON.parse(res.data.imagedetalis);
+          console.log(img.detailsurl);
+          let imagemain = {
+            name: "",
+            url: img.mainimageurl[0]
+          };
+          img.detailsurl.map(item => {
+            let imagedetalis = {
+              name: "",
+              url: item
+            };
+            this.filelistdetail.push(imagedetalis)
+          });
+
+          this.filelistmain.push(imagemain);
+
           // this.imagedetails, //是数组
-          this.name= data.name
-          this.number = data.number
-          this.moduls= data.moduls
-          this.weixin= data.weixin
-          this.phone= data.phone
-          this.expain= data.expain
-          this.money= data.money
-          this.discount= data.discount
+          this.name = data.name;
+          this.number = data.number;
+          this.moduls = data.moduls;
+          this.weixin = data.weixin;
+          this.phone = data.phone;
+          this.expain = data.expain;
+          this.money = data.money;
+          this.discount = data.discount;
         });
       }
     },

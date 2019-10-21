@@ -1,7 +1,7 @@
 <template>
   <!-- 尿不湿产品上传====数据：name,number,moduls,weixin,phone,image,imagedetails,expain -->
   <div class="bx">
-    <p class="title">尿不湿产品的上传</p>
+    <p class="title">特产产品的上传</p>
     <el-row>
       <el-col :span="2" :offset="5">
         <p>产品名称：</p>
@@ -84,6 +84,7 @@
             :on-change="handleChange"
             :limit="1"
             :auto-upload="false"
+            :file-list="filelistmain"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -106,6 +107,7 @@
             :limit="10"
             multiple
             :auto-upload="false"
+            :file-list="filelistdetail"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -136,7 +138,9 @@ export default {
       dialogImageUrl: "",
       dialogImageUrlmain: [], //主图图片
       money: "",
-      discount: ""
+      discount: "",
+      filelistmain: [], //主图绑定的已上传的文件列表
+      filelistdetail: []
     };
   },
   mounted() {
@@ -160,10 +164,21 @@ export default {
         this.$axios.post(url, query).then(res => {
           let data = res.data.data[0];
           let img = JSON.parse(res.data.imagedetalis);
-          // console.log(img.mainimageurl);
+          //获取主图图片
+          let imagemain = {
+            name: "",
+            url: img.mainimageurl[0]
+          };
+          this.filelistmain.push(imagemain);
+          //获取详情图片
+          img.detailsurl.map(item => {
+            let imagedetalis = {
+              name: "",
+              url: item
+            };
+            this.filelistdetail.push(imagedetalis);
+          });
 
-          // this.dialogImageUrlmain=img.mainimageurl //是数组
-          // this.imagedetails, //是数组
           this.name = data.name;
           this.number = data.number;
           this.moduls = data.moduls;

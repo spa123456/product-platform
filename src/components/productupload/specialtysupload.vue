@@ -135,12 +135,46 @@ export default {
       expain: "", //产品的说明
       dialogImageUrl: "",
       dialogImageUrlmain: [], //主图图片
-      money:'',
-      discount:''
+      money: "",
+      discount: ""
     };
   },
+  mounted() {
+    this.updatequery();
+  },
   methods: {
- 
+    /*
+     **  @description 判断是否是更新数据修改数据--并获取相关数据
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    updatequery() {
+      let productID = this.$route.query.productID;
+      if (productID != undefined) {
+        let url = "http://localhost:3000/getdiaperdetalis";
+        let query = {
+          id: productID,
+          filename: "specialty"
+        };
+        this.$axios.post(url, query).then(res => {
+          let data = res.data.data[0];
+          let img = JSON.parse(res.data.imagedetalis);
+          // console.log(img.mainimageurl);
+
+          // this.dialogImageUrlmain=img.mainimageurl //是数组
+          // this.imagedetails, //是数组
+          this.name = data.name;
+          this.number = data.number;
+          this.moduls = data.moduls;
+          this.weixin = data.weixin;
+          this.phone = data.phone;
+          this.expain = data.expain;
+          this.money = data.money;
+          this.discount = data.discount;
+        });
+      }
+    },
     /*
      **  @description 主图上传参数
      **  @param {}
@@ -202,7 +236,7 @@ export default {
      */
     uploadimage() {
       let params = {
-        filename:'specialty',
+        filename: "specialty",
         mainimgurl: this.dialogImageUrlmain, //是数组
         detailsurl: this.imagedetails, //是数组
         name: this.name,
@@ -212,10 +246,10 @@ export default {
         weixin: this.weixin,
         phone: this.phone,
         expain: this.expain,
-        money:this.money,
-        discount:this.discount
+        money: this.money,
+        discount: this.discount
       };
-      
+
       let num = 0;
       for (const item in params) {
         if (params[item] == "") {
@@ -225,12 +259,12 @@ export default {
           num++;
         }
       }
-      if ((num == 12)) {
+      if (num == 12) {
         let url = "http://localhost:3000/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
-          if (res.data.status =="OK") {
-            this.$message.success("OK")
-            this.$router.push('specialtys')
+          if (res.data.status == "OK") {
+            this.$message.success("OK");
+            this.$router.push("specialtys");
           }
         });
       }

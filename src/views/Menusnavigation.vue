@@ -24,7 +24,7 @@
             <span>上传产品</span>
           </template>
           <el-menu-item index="diapersupload">尿不湿</el-menu-item>
-          <el-menu-item index="specialtysuploade">特产</el-menu-item>
+          <el-menu-item index="specialtysupload">特产</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>

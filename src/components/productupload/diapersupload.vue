@@ -125,22 +125,24 @@
   </div>
 </template>
 <script>
+import { log } from "util";
 export default {
   data() {
     return {
       name: "",
+      imagemainlist: [], //上传的主图图片
+      imagedetalislist: [], //上传的详情图图片
       number: "",
       moduls: "",
       weixin: "",
       phone: "",
       address: "",
-      // imagedetails: [], //其他详情图片
       expain: "", //产品的说明
-      // dialogImageUrl: "",
-      // dialogImageUrlmain: [], //主图图片
       money: "",
       discount: "",
-      filelistmain: [], //主图绑定的已上传的文件列表
+      dialogImageUrl: "",
+      dialogImageUrlmain: "", //主图图片
+      filelistmain: [], //主图绑定的已上传的文件列表----只用来展示，上传单独写个数组
       filelistdetail: [],
       id: "" //产品ID
     };
@@ -179,15 +181,9 @@ export default {
               url: item
             };
             this.filelistdetail.push(imagedetalis);
+            this.imagedetalislist.push(item); //是数组
           });
-
-
-
-          // this.dialogImageUrlmain = this.filelistmain;
-          // this.imagedetails = this.filelistdetail; //是数组
-
-
-
+          this.imagemainlist.push(img.mainimageurl[0]);
           this.name = data.name;
           this.number = data.number;
           this.moduls = data.moduls;
@@ -224,7 +220,8 @@ export default {
       reader.readAsDataURL(file.raw);
       reader.onload = function() {
         this.result; //base64编码
-        that.filelistmain[0] = this.result;
+        that.dialogImageUrlmain = this.result;
+        that.imagemainlist.push(this.result);
       };
     },
     /*
@@ -233,7 +230,8 @@ export default {
      **  @return
      **  @author shipingan
      */
-    handleChangeimage(file) {
+    handleChangeimage(file, filelist) {
+      console.log(filelist);
       const isLt5M = file.raw.size / 1024 / 1024 < 5;
       const isJPG =
         file.raw.type === "image/jpeg" || file.raw.type === "image/png";
@@ -251,7 +249,7 @@ export default {
       reader.onload = function() {
         this.result; //base64编码
         that.dialogImageUrl = this.result;
-        that.filelistdetail.push(that.dialogImageUrl);
+        that.imagedetalislist.push(this.result);
       };
     },
     /*
@@ -263,10 +261,8 @@ export default {
     uploadimage() {
       let params = {
         filename: "diaper",
-        // mainimgurl: this.dialogImageUrlmain, //是数组
-        mainimgurl: this.filelistmain, //是数组
-        // detailsurl: this.imagedetails, //是数组
-        detailsurl: this.filelistdetail, //是数组
+        mainimgurl: this.imagemainlist, //是数组
+        detailsurl: this.imagedetalislist, //是数组
         name: this.name,
         timeDate: Date.now() + "",
         number: this.number,

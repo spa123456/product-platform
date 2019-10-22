@@ -125,7 +125,6 @@
   </div>
 </template>
 <script>
-import { log } from "util";
 export default {
   data() {
     return {
@@ -168,7 +167,6 @@ export default {
         this.$axios.post(url, query).then(res => {
           let data = res.data.data[0];
           let img = JSON.parse(res.data.imagedetalis);
-          console.log(res);
           let imagemain = {
             name: "",
             url: img.mainimageurl[0]
@@ -230,8 +228,7 @@ export default {
      **  @return
      **  @author shipingan
      */
-    handleChangeimage(file, filelist) {
-      console.log(filelist);
+    handleChangeimage(file) {
       const isLt5M = file.raw.size / 1024 / 1024 < 5;
       const isJPG =
         file.raw.type === "image/jpeg" || file.raw.type === "image/png";
@@ -275,7 +272,6 @@ export default {
         address: this.address,
         id: this.id
       };
-      console.log(params);
 
       let num = 0;
       for (const item in params) {

@@ -23,7 +23,7 @@
         <p>产品规格：</p>
       </el-col>
       <el-col :span="12">
-        <el-input placeholder="请输入产品规格(nb,s,l,......)" v-model="moduls"></el-input>
+        <el-input placeholder="请输入产品规格" v-model="moduls"></el-input>
       </el-col>
     </el-row>
     <el-row>
@@ -129,18 +129,21 @@ export default {
   data() {
     return {
       name: "",
+      imagemainlist: [], //上传的主图图片
+      imagedetalislist: [], //上传的详情图图片
       number: "",
       moduls: "",
       weixin: "",
       phone: "",
-      imagedetails: [], //其他详情图片
+      address: "",
       expain: "", //产品的说明
-      dialogImageUrl: "",
-      dialogImageUrlmain: [], //主图图片
       money: "",
       discount: "",
-      filelistmain: [], //主图绑定的已上传的文件列表
-      filelistdetail: []
+      dialogImageUrl: "",
+      dialogImageUrlmain: "", //主图图片
+      filelistmain: [], //主图绑定的已上传的文件列表----只用来展示，上传单独写个数组
+      filelistdetail: [],
+      id: "" //产品ID
     };
   },
   mounted() {
@@ -164,21 +167,21 @@ export default {
         this.$axios.post(url, query).then(res => {
           let data = res.data.data[0];
           let img = JSON.parse(res.data.imagedetalis);
-          //获取主图图片
           let imagemain = {
             name: "",
             url: img.mainimageurl[0]
           };
           this.filelistmain.push(imagemain);
-          //获取详情图片
+
           img.detailsurl.map(item => {
             let imagedetalis = {
               name: "",
               url: item
             };
             this.filelistdetail.push(imagedetalis);
+            this.imagedetalislist.push(item); //是数组
           });
-
+          this.imagemainlist.push(img.mainimageurl[0]);
           this.name = data.name;
           this.number = data.number;
           this.moduls = data.moduls;
@@ -187,6 +190,8 @@ export default {
           this.expain = data.expain;
           this.money = data.money;
           this.discount = data.discount;
+          this.address = data.address;
+          this.id = data.id;
         });
       }
     },
@@ -213,7 +218,8 @@ export default {
       reader.readAsDataURL(file.raw);
       reader.onload = function() {
         this.result; //base64编码
-        that.dialogImageUrlmain[0] = this.result;
+        that.dialogImageUrlmain = this.result;
+        that.imagemainlist.push(this.result);
       };
     },
     /*
@@ -240,7 +246,7 @@ export default {
       reader.onload = function() {
         this.result; //base64编码
         that.dialogImageUrl = this.result;
-        that.imagedetails.push(that.dialogImageUrl);
+        that.imagedetalislist.push(this.result);
       };
     },
     /*
@@ -252,8 +258,8 @@ export default {
     uploadimage() {
       let params = {
         filename: "specialty",
-        mainimgurl: this.dialogImageUrlmain, //是数组
-        detailsurl: this.imagedetails, //是数组
+        mainimgurl: this.imagemainlist, //是数组
+        detailsurl: this.imagedetalislist, //是数组
         name: this.name,
         timeDate: Date.now() + "",
         number: this.number,
@@ -262,19 +268,22 @@ export default {
         phone: this.phone,
         expain: this.expain,
         money: this.money,
-        discount: this.discount
+        discount: this.discount,
+        address: this.address,
+        id: this.id
       };
 
       let num = 0;
       for (const item in params) {
-        if (params[item] == "") {
+        if (params[item] != "" || params.id == "") {
+          num++;
+        } else {
           this.$message.error("请正确填写表单");
           return;
-        } else {
-          num++;
         }
       }
-      if (num == 12) {
+
+      if (num == 14) {
         let url = "http://localhost:3000/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status == "OK") {

@@ -62,7 +62,7 @@ export default {
     **  @author shipingan
     */
     removequery(row) {
-      let url = "http://localhost:3001/removediaperFile";
+      let url = "http://127.0.0.1:3001/removediaperFile";
       let params = {
         id: row.id,
         path: row.address,
@@ -84,7 +84,7 @@ export default {
      **  @author shipingan
      */
     getdiaperdetali() {
-      let url = "http://localhost:3001/getdiaperlistdetalis";
+      let url = "http://127.0.0.1:3001/getdiaperlistdetalis";
       let params = {
         filename: "diaper"
       };

@@ -159,7 +159,7 @@ export default {
     updatequery() {
       let productID = this.$route.query.productID;
       if (productID != undefined) {
-        let url = "http://localhost:3001/getdiaperdetalis";
+        let url = "http://127.0.0.1:3001/getdiaperdetalis";
         let query = {
           id: productID,
           filename: "diaper"
@@ -284,7 +284,7 @@ export default {
       }
 
       if (num == 14) {
-        let url = "http://localhost:3001/adddiaperproduct";
+        let url = "http://127.0.0.1:3001/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status == "OK") {
             this.$message.success("OK");

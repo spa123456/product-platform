@@ -69,7 +69,7 @@ export default {
         id: this.productID,
         filename: "specialty"
       };
-      let url = "http://localhost:3000/getdiaperdetalis";
+      let url = "http://localhost:3001/getdiaperdetalis";
       this.$axios.post(url, params).then(res => {
         let img = JSON.parse(res.data.imagedetalis);
         this.mainimageurl = img.mainimageurl[0];

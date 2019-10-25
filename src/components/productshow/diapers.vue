@@ -1,7 +1,6 @@
 <template>
   <div class="bx">
     <p class="title">尿不湿产品</p>
-    <el-button @click="getabc">aaaa</el-button>
     <el-table :data="tableData" style="width: 100%" size="mini" border>
       <el-table-column prop="name" label="产品名称" align="center"></el-table-column>
       <el-table-column prop="number" label="产品数量" align="center"></el-table-column>
@@ -93,13 +92,6 @@ export default {
         this.tableData = res.data;
       });
     },
-    
-    getabc(){
-      let url = "http://www.shiyishengbaby.cn/getabc"
-      this.$axios.get(url).then(res=>{
-        return res
-      })
-    }
   }
 };
 </script>

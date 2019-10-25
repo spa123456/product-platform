@@ -1,6 +1,7 @@
 <template>
   <div class="bx">
     <p class="title">尿不湿产品</p>
+    <el-button @click="getabc">aaaa</el-button>
     <el-table :data="tableData" style="width: 100%" size="mini" border>
       <el-table-column prop="name" label="产品名称" align="center"></el-table-column>
       <el-table-column prop="number" label="产品数量" align="center"></el-table-column>
@@ -62,14 +63,14 @@ export default {
     **  @author shipingan
     */
     removequery(row) {
-      let url = "http://127.0.0.1:3001/removediaperFile";
+      // let url = "http://127.0.0.1:3001/removediaperFile";
+      let url = "http://www.shiyishengbaby.cn/removediaperFile";
       let params = {
         id: row.id,
         path: row.address,
         filename: "diaper"
       };
 
-      console.log(params);
       this.$axios.post(url, params).then(res => {
         if (res.data) {
           this.$message.success("删除成功");
@@ -84,13 +85,20 @@ export default {
      **  @author shipingan
      */
     getdiaperdetali() {
-      let url = "http://127.0.0.1:3001/getdiaperlistdetalis";
+      let url = "http://www.shiyishengbaby.cn/getdiaperlistdetalis";
       let params = {
         filename: "diaper"
       };
       this.$axios.post(url, params).then(res => {
         this.tableData = res.data;
       });
+    },
+    
+    getabc(){
+      let url = "http://www.shiyishengbaby.cn/getabc"
+      this.$axios.get(url).then(res=>{
+        return res
+      })
     }
   }
 };

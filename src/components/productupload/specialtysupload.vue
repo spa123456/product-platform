@@ -159,7 +159,7 @@ export default {
     updatequery() {
       let productID = this.$route.query.productID;
       if (productID != undefined) {
-        let url = "http://www.shiyishengbaby.cn/getdiaperdetalis";
+        let url = "/getdiaperdetalis";
         let query = {
           id: productID,
           filename: "specialty"
@@ -284,7 +284,7 @@ export default {
       }
 
       if (num == 14) {
-        let url = "http://www.shiyishengbaby.cn/adddiaperproduct";
+        let url = "/adddiaperproduct";
         this.$axios.post(url, params).then(res => {
           if (res.data.status == "OK") {
             this.$message.success("OK");

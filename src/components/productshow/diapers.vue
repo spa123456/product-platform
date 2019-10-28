@@ -26,6 +26,7 @@ export default {
   },
   mounted() {
     this.getdiaperdetali();
+    this.getabc()
   },
   methods: {
     /*
@@ -84,6 +85,7 @@ export default {
      **  @author shipingan
      */
     getdiaperdetali() {
+      // let url = "/getdiaperlistdetalis";
       let url = "/getdiaperlistdetalis";
       let params = {
         filename: "diaper"
@@ -92,6 +94,12 @@ export default {
         this.tableData = res.data;
       });
     },
+    getabc(){
+      this.$axios.get('getabc').then(res=>{
+        console.log(res);
+        
+      })
+    }
   }
 };
 </script>

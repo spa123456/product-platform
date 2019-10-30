@@ -36,7 +36,7 @@
     <el-row>
       <p style="color:#AAA;font-size:30px">产品详情图</p>
       <!-- <template v-for="(itme,index) in detailsurl" > -->
-        <el-col :span="24" class="image-col" v-for="(itme,index) in detailsurl" v-bind="index">
+        <el-col :span="24" class="image-col" v-for="itme in detailsurl" >
           <img :src="itme" alt width="1000" />
         </el-col>
       <!-- </template> -->
@@ -55,6 +55,7 @@ export default {
   },
   created() {
     this.queryproductID();
+    
   },
   methods: {
     /*
@@ -75,6 +76,8 @@ export default {
         this.mainimageurl = img.mainimageurl[0];
         this.detailsurl = img.detailsurl;
         this.productdetails = res.data.data[0];
+    console.log(this.detailsurl);
+
       });
     }
   }

@@ -26,7 +26,6 @@ export default {
   },
   mounted() {
     this.getdiaperdetali();
-    this.getabc()
   },
   methods: {
     /*
@@ -93,12 +92,6 @@ export default {
       this.$axios.post(url, params).then(res => {
         this.tableData = res.data;
       });
-    },
-    getabc(){
-      this.$axios.get('getabc').then(res=>{
-        console.log(res);
-        
-      })
     }
   }
 };

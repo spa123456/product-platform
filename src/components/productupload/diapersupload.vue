@@ -104,6 +104,7 @@
             action="localhost://h"
             list-type="picture-card"
             :on-change="handleChangeimage"
+            :on-remove="removeimagedetalies"
             :limit="10"
             multiple
             :auto-upload="false"
@@ -131,6 +132,7 @@ export default {
       name: "",
       imagemainlist: [], //上传的主图图片
       imagedetalislist: [], //上传的详情图图片
+      imagedetalislistnew:[],//临时存储一个数据，用于更新，覆盖原有的数据
       number: "",
       moduls: "",
       weixin: "",
@@ -213,6 +215,7 @@ export default {
         this.$message.error("上传图片不能大于5M");
         return;
       }
+      this.imagemainlist = [];
       let that = this;
       var reader = new FileReader();
       reader.readAsDataURL(file.raw);
@@ -222,13 +225,22 @@ export default {
         that.imagemainlist.push(this.result);
       };
     },
+
+
+    removeimagedetalies(file,fileList){
+      this.imagedetalislist = []
+      console.log(fileList);
+      fileList.map(item=>{
+        this.imagedetalislist.push(item.url)
+      })
+    },
     /*
      **  @description 详情图上传
      **  @param {}
      **  @return
      **  @author shipingan
      */
-    handleChangeimage(file) {
+    handleChangeimage(file,fileList) {
       const isLt5M = file.raw.size / 1024 / 1024 < 5;
       const isJPG =
         file.raw.type === "image/jpeg" || file.raw.type === "image/png";
@@ -242,6 +254,7 @@ export default {
       }
       let that = this;
       var reader = new FileReader();
+
       reader.readAsDataURL(file.raw);
       reader.onload = function() {
         this.result; //base64编码
